@@ -17,6 +17,8 @@ void printVector( vector<point>& pts )
 
 void buildPts( vector<point>& pts )
 {
+//Pre  : Vector of point structs has been declared
+//Post : Vector of point structs has been initialized with points
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < rows; j++) {
 			point p (j, i);
@@ -27,6 +29,8 @@ void buildPts( vector<point>& pts )
 
 int findMinDistance( vector<point>& pts ) 
 {
+//Pre  : Vector of point structs has been initalized and sent into the main algorithm handler
+//Post : The index of the next unvisited point with smallest distance from source is returned
 	double min = 10000000;
 	int index;
 
@@ -44,11 +48,16 @@ int findMinDistance( vector<point>& pts )
 
 void updateDistances( vector<point>& pts, int index ) 
 {
+//Pre  : Index of smallest distance from source has been found
+//Post : Distances for the adjecent points are updated if applicable
+	
+	//The four adjecent points to the current index
 	int up = index + rows, down = index - rows, left = index - 1, right = index + 1;
-	//int diag1 = up - 1, diag2 = up + 1, diag3 = down - 1, diag4 = down + 1;
 
+	//Used to make sure adjacent left and right points do not overflow into next or previous row
 	int indexRow = index / rows;	
 
+	//If up point exists and is not visited, try to update distance
 	if ( up >= 0 && up < pts.size() ) {
 		if ( !pts[up].wall ) {
 			int newDistance = pts[index].distance + 1;
@@ -88,50 +97,9 @@ void updateDistances( vector<point>& pts, int index )
 			}
 		}
 	}
-
-	/*
-	if ( (diag1 / rows) == indexRow+1 ) {
-		if ( !pts[diag1].wall ) {
-			int newDistance = pts[index].distance + 1.4142;
-			if ( newDistance < pts[diag1].distance ) {
-				pts[diag1].distance = newDistance;
-				pts[diag1].parent = index;
-			}
-		}
-	}
-
-	if ( (diag2 / rows) == indexRow+1 ) {
-		if ( !pts[diag2].wall ) {
-			int newDistance = pts[index].distance + 1.4142;
-			if ( newDistance < pts[diag2].distance ) {
-				pts[diag2].distance = newDistance;
-				pts[diag2].parent = index;
-			}
-		}
-	}
-
-	if ( (diag3 / rows) == indexRow-1 ) {
-		if ( !pts[diag3].wall ) {
-			int newDistance = pts[index].distance + 1.4142;
-			if ( newDistance < pts[diag3].distance ) {
-				pts[diag3].distance = newDistance;
-				pts[diag3].parent = index;
-			}
-		}
-	}
-
-	if ( (diag4 / rows) == indexRow-1 ) {
-		if ( !pts[diag4].wall ) {
-			int newDistance = pts[index].distance + 1.4142;
-			if ( newDistance < pts[diag4].distance ) {
-				pts[diag4].distance = newDistance;
-				pts[diag4].parent = index;
-			}
-		}
-	}
-	*/
 }
 
+//Keep this around because you never know
 void debug( int x )
 {
 	cout << "we made it to" << " " << x << endl;

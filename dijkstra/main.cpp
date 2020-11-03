@@ -3,11 +3,11 @@
 #include "structs.h"
 #include "prototypes.h"
 
-int clickCount = 0;
+int clickCount = 0; //used by mouse handler to choose if next click will be start, end, or wall 
 int source;
 int end;
 int current;
-bool drawPath = true;
+bool drawPath = true; //toggles path display
 double line [4];
 std::vector<point> pts;
 
@@ -16,7 +16,7 @@ void init( int argc, char* argv[] )
     glutInit(&argc,argv);
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB); /* default, not needed */
     glutInitWindowSize(wsize, wsize); /* set pixel window */
-    glutCreateWindow("Polygon Tesselation"); /* window title */
+    glutCreateWindow("Dijkstra's Algorithm"); /* window title */
 
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glColor3f(0, 0, 0);
@@ -29,7 +29,8 @@ int main( int argc, char* argv[] )
 {
     init(argc, argv);
 
-	srand(time(0));
+    //random seed for generating random wall points if user chooses
+    srand(time(0));
 
     buildPts(pts);
 
